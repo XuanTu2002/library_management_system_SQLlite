@@ -17,6 +17,7 @@ namespace LibraryManagement.Services
         public List<BorrowRecord> GetBorrowedBooksReport()
         {
             return DataStore.Instance.Context.BorrowRecords
+                            .AsNoTracking()
                             .Include(r => r.Borrower)
                             .Include(r => r.Items)
                             .Where(r => r.ReturnDate == null)
@@ -27,6 +28,7 @@ namespace LibraryManagement.Services
         public List<BorrowRecord> GetOverdueReport()
         {
             return DataStore.Instance.Context.BorrowRecords
+                            .AsNoTracking()
                             .Include(r => r.Borrower)
                             .Include(r => r.Items)
                             .Where(r => r.ReturnDate == null && DateTime.Now > r.DueDate)
